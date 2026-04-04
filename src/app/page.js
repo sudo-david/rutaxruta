@@ -25,15 +25,16 @@ export default function Home() {
 
           {/* En src/app/page.js, busca la parte de los botones y actualízala así: */}
 
+
           <div className="mt-12 flex justify-center gap-8">
             <Link
-              href="/registro"
+              href="/login"
               className="bg-white text-blue-700 px-10 py-5 rounded-full font-black text-xl shadow-2xl hover:bg-blue-50 transition-transform hover:-translate-y-1"
             >
               BUSCAR VIAJE
             </Link>
             <Link
-              href="/registro"
+              href="/login"
               className="border-2 border-white text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-white/10 transition-colors"
             >
               OFRECER CUPO

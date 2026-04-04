@@ -31,11 +31,15 @@ const Navbar = () => {
           </Link>
 
           {/* BOTÓN ENTRAR */}
+          <Link href="/login" className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold hover:bg-blue-50 transition-all shadow-md">
+            Entrar
+          </Link>
+
           <Link
-            href="/registro" // Cambiamos /login por /registro temporalmente o crea una página de login luego
-            className="flex items-center gap-2 bg-white text-blue-600 px-6 py-2.5 rounded-full font-bold hover:bg-blue-50 transition-all shadow-md"
+            href="/registro"
+            className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold hover:bg-blue-50 transition-all shadow-md"
           >
-            <UserCircle size={22} /> Entrar
+            Registrarse
           </Link>
         </div>
       </div>
