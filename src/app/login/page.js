@@ -1,9 +1,39 @@
 "use client";
+import { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function LoginPage() {
+  const [formData, setFormData] = useState({ correo: '', password: '' });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`¡Bienvenido de nuevo, ${data.usuario.nombre}!`);
+        // Por ahora redirigimos a la landing, luego haremos el Dashboard
+        window.location.href = "/"; 
+      } else {
+        alert(data.error);
+      }
+    } catch (error) {
+      alert("Error al conectar con el servidor");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
       <motion.div 
@@ -16,23 +46,27 @@ export default function LoginPage() {
           <p className="mt-2 text-gray-600">Ingresa a tu cuenta de RutaXRuta</p>
         </div>
 
-        <form className="mt-8 space-y-6">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div className="relative">
               <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
               <input
+                name="correo"
                 type="email"
                 placeholder="Correo electrónico"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900"
+                onChange={handleChange}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 placeholder-gray-400"
                 required
               />
             </div>
             <div className="relative">
               <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
               <input
+                name="password"
                 type="password"
                 placeholder="Contraseña"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900"
+                onChange={handleChange}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 placeholder-gray-400"
                 required
               />
             </div>

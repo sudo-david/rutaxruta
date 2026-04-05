@@ -23,7 +23,7 @@ export default function Home() {
             La plataforma de confianza que conecta a conductores y pasajeros en el Valle de Aburrá.
           </p>
 
-          {/* En src/app/page.js, busca la parte de los botones y actualízala así: */}
+          
 
 
           <div className="mt-12 flex justify-center gap-8">
