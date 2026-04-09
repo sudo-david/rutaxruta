@@ -23,9 +23,11 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
+        //GUARDAR EN MEMORIA PARA EL DASHBOARD
+        localStorage.setItem('usuarioRutaX', JSON.stringify(data.usuario));
+        
         alert(`¡Bienvenido de nuevo, ${data.usuario.nombre}!`);
-        // Por ahora redirigimos a la landing, luego haremos el Dashboard
-        window.location.href = "/"; 
+        window.location.href = "/dashboard"; 
       } else {
         alert(data.error);
       }
@@ -42,8 +44,8 @@ export default function LoginPage() {
         className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100"
       >
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900">Bienvenido de nuevo</h2>
-          <p className="mt-2 text-gray-600">Ingresa a tu cuenta de RutaXRuta</p>
+          <h2 className="text-3xl font-extrabold text-gray-900 font-black italic">Ruta<span className="text-blue-600">X</span>Ruta</h2>
+          <p className="mt-2 text-gray-600 font-medium">Ingresa a tu cuenta</p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
