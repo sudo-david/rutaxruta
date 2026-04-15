@@ -5,9 +5,14 @@ import { Car, Search, MapPin, PlusCircle, LogOut, ShieldCheck } from 'lucide-rea
 import { motion } from 'framer-motion';
 
 // Cargamos el mapa de forma dinámica para evitar errores de SSR
+// Pasamos el rol del usuario para que el mapa active las funciones de búsqueda/rutas
 const Mapa = dynamic(() => import('@/components/Mapa'), { 
   ssr: false,
-  loading: () => <div className="h-[450px] w-full bg-gray-100 animate-pulse rounded-2xl flex items-center justify-center text-gray-400">Cargando mapa de Medellín...</div>
+  loading: () => (
+    <div className="h-[450px] w-full bg-gray-100 animate-pulse rounded-2xl flex items-center justify-center text-gray-400">
+      Cargando mapa de Medellín...
+    </div>
+  )
 });
 
 export default function DashboardPage() {
@@ -132,7 +137,6 @@ export default function DashboardPage() {
                 ¡Tu próxima ruta en <span className="font-bold underline">Medellín</span> te espera!
               </div>
             </div>
-            {/* Círculo decorativo de fondo */}
             <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500" />
           </motion.div>
         </motion.div>
@@ -148,23 +152,28 @@ export default function DashboardPage() {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h3 className="text-xl font-bold text-gray-800">Mapa de Cobertura</h3>
-                <p className="text-sm text-gray-500 italic">Área Metropolitana del Valle de Aburrá</p>
+                <p className="text-sm text-gray-500 italic font-medium uppercase tracking-wider">
+                   {usuario.rol === 'conductor' ? 'Define tu ruta (Origen y Destino)' : 'Busca direcciones cercanas'}
+                </p>
               </div>
               <span className="flex items-center gap-2 bg-green-50 text-green-600 px-4 py-1.5 rounded-full text-xs font-black border border-green-100">
                 <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span> SISTEMA ACTIVO
               </span>
             </div>
             
-            <Mapa />
+            {/* AQUÍ PASAMOS EL ROL AL COMPONENTE DEL MAPA */}
+            <Mapa rol={usuario.rol} />
             
             <div className="mt-6 grid grid-cols-2 gap-4">
                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <p className="text-xs font-bold text-gray-400 uppercase mb-1">Punto de interés</p>
-                  <p className="text-sm text-gray-700 font-medium">Estación Poblado</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase mb-1">Estado</p>
+                  <p className="text-sm text-gray-700 font-bold">
+                    {usuario.rol === 'conductor' ? 'Esperando trazado' : 'Listo para buscar'}
+                  </p>
                </div>
                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <p className="text-xs font-bold text-gray-400 uppercase mb-1">Estado del tráfico</p>
-                  <p className="text-sm text-green-600 font-bold">Fluido</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase mb-1">Zona actual</p>
+                  <p className="text-sm text-blue-600 font-bold italic">Medellín, Antioquia</p>
                </div>
             </div>
           </div>
