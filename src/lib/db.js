@@ -3,7 +3,7 @@ import mysql from 'mysql2/promise';
 
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'admin',      // Tu usuario de MySQL Workbench
+  user: 'root',      // Tu usuario de MySQL Workbench
   password: 'david1011', // Tu contraseña de MySQL
   database: 'rutaxruta',
   waitForConnections: true,
