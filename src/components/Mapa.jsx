@@ -6,7 +6,6 @@ import L from 'leaflet';
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder";
 
-// Iconos personalizados
 const iconoInicio = L.divIcon({
   html: `<div style="color: #2563eb;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg></div>`,
   className: "custom-leaflet-icon",
@@ -21,7 +20,6 @@ const iconoFin = L.divIcon({
   iconAnchor: [4, 32],
 });
 
-// Estilo para asegurar que el buscador sea legible
 const estiloBuscador = `
   .leaflet-control-geocoder input {
     color: #1f2937 !important;
@@ -31,6 +29,9 @@ const estiloBuscador = `
     border: 1px solid #d1d5db !important;
   }
 `;
+
+// Convierte un objeto LatLng de Leaflet a plain object serializable
+const toPlain = (latlng) => ({ lat: latlng.lat, lng: latlng.lng });
 
 function Buscador({ onLocationSelect }) {
   const map = useMap();
@@ -42,7 +43,7 @@ function Buscador({ onLocationSelect }) {
       .on("markgeocode", (e) => {
         const latlng = e.geocode.center;
         map.setView(latlng, 16);
-        onLocationSelect(latlng);
+        onLocationSelect(toPlain(latlng)); // ✅ plain object
       })
       .addTo(map);
     return () => map.removeControl(control);
@@ -57,9 +58,9 @@ export default function Mapa({ rol, inicio, setInicio, fin, setFin }) {
     useMapEvents({
       click(e) {
         if (rol === 'conductor') {
-          if (!inicio) setInicio(e.latlng);
-          else if (!fin) setFin(e.latlng);
-          else { setInicio(e.latlng); setFin(null); }
+          if (!inicio)      setInicio(toPlain(e.latlng));               // ✅
+          else if (!fin)    setFin(toPlain(e.latlng));                   // ✅
+          else {            setInicio(toPlain(e.latlng)); setFin(null); } // ✅
         }
       },
     });
@@ -76,8 +77,8 @@ export default function Mapa({ rol, inicio, setInicio, fin, setFin }) {
         }} />
         <ManejadorClics />
 
-        {inicio && <Marker position={inicio} icon={iconoInicio}><Popup>Inicio</Popup></Marker>}
-        {fin && <Marker position={fin} icon={iconoFin}><Popup>Destino</Popup></Marker>}
+        {inicio && <Marker position={[inicio.lat, inicio.lng]} icon={iconoInicio}><Popup>Inicio</Popup></Marker>}
+        {fin    && <Marker position={[fin.lat,   fin.lng  ]} icon={iconoFin}   ><Popup>Destino</Popup></Marker>}
       </MapContainer>
     </div>
   );
