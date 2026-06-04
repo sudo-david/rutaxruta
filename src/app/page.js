@@ -7,82 +7,87 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 overflow-x-hidden">
 
+      <style>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        .anim-hero   { animation: fadeUp 0.6s ease forwards; }
+        .anim-delay1 { animation: fadeUp 0.6s ease 0.1s both; }
+        .anim-delay2 { animation: fadeUp 0.6s ease 0.2s both; }
+        .anim-delay3 { animation: fadeUp 0.6s ease 0.3s both; }
+      `}</style>
+
       {/* NAV */}
-      <nav className="border-b border-gray-100 py-4 px-6 md:px-12 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-50">
+      <nav className="border-b border-gray-100 py-4 px-5 md:px-12 flex justify-between items-center bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <h1 className="text-xl md:text-2xl font-black italic tracking-tighter">
           Ruta<span className="text-blue-600">X</span>Ruta
         </h1>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
           <Link href="#info" className="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors hidden sm:block">
             ¿Cómo funciona?
           </Link>
           <Link
             href="/login"
-            className="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-md shadow-blue-100"
+            className="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-md shadow-blue-100"
           >
             Iniciar Sesión
           </Link>
         </div>
       </nav>
 
-      {/* HERO */}
-      <header className="container mx-auto px-6 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
-          <span className="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-blue-100 inline-block mb-6">
+      {/* HERO — sin Framer Motion, CSS puro */}
+      <header className="container mx-auto px-5 py-10 md:py-20 lg:py-24 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="anim-hero">
+          <span className="anim-delay1 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-blue-100 inline-block mb-5">
             Movilidad Sostenible en Medellín
           </span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.1] mb-6 italic">
-            Comparte tu viaje, <span className="text-blue-600">reduce tu huella.</span>
+          <h2 className="anim-delay1 text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.1] mb-5 italic">
+            Comparte tu viaje,{' '}
+            <span className="text-blue-600">reduce tu huella.</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-lg leading-relaxed">
+          <p className="anim-delay2 text-base md:text-xl text-gray-600 mb-6 max-w-lg leading-relaxed">
             La plataforma de carpooling diseñada para conectar a conductores y pasajeros en el Valle de Aburrá de forma segura y eficiente.
           </p>
 
-          {/* TRUST INDICATOR */}
-          <div className="flex items-start gap-3 bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 mb-8 max-w-lg">
-            <span className="text-xl mt-0.5">🎓</span>
+          <div className="anim-delay2 flex items-start gap-3 bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 mb-6 max-w-lg">
+            <span className="text-lg mt-0.5 flex-shrink-0">🎓</span>
             <p className="text-sm text-gray-600 leading-relaxed">
               <span className="font-bold text-gray-900">Hecho por, para, y en beneficio</span> de los que estudiamos y trabajamos diariamente en el Valle de Aburrá.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/registro" className="flex items-center justify-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-black transition-all group">
-              Empezar ahora <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+          <div className="anim-delay3 flex flex-col sm:flex-row gap-3">
+            <Link href="/registro" className="flex items-center justify-center gap-2 bg-gray-900 text-white px-6 py-4 rounded-2xl font-bold text-base hover:bg-black transition-all group">
+              Empezar ahora <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="#info" className="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-200 transition-all">
+            <Link href="#info" className="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 px-6 py-4 rounded-2xl font-bold text-base hover:bg-gray-200 transition-all">
               Saber más
             </Link>
           </div>
-        </motion.div>
+        </div>
 
-        {/* TRIP CARD */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative hidden md:flex justify-center items-center"
-        >
+        {/* TRIP CARD — solo md+ */}
+        <div className="relative hidden md:flex justify-center items-center anim-delay2">
           <div className="absolute -inset-6 bg-blue-100/50 rounded-[48px] blur-3xl pointer-events-none" />
           <TripCard />
-        </motion.div>
+        </div>
       </header>
 
       {/* FEATURES */}
-      <section id="info" className="bg-gray-50 py-20 px-6">
+      <section id="info" className="bg-gray-50 py-14 md:py-20 px-5">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-black mb-4 italic">¿Por qué usar RutaXRuta?</h3>
+          <div className="text-center mb-12">
+            <h3 className="text-2xl md:text-4xl font-black mb-4 italic">¿Por qué usar RutaXRuta?</h3>
             <div className="h-1.5 w-20 bg-blue-600 mx-auto rounded-full" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <FeatureCard
-              icon={<ShieldCheck size={28} />}
+              icon={<ShieldCheck size={26} />}
               iconBg="bg-blue-50"
               iconColor="text-blue-600"
               title="Seguridad"
@@ -90,7 +95,7 @@ export default function LandingPage() {
               benefit="→ Viaja con personas de confianza"
             />
             <FeatureCard
-              icon={<MapPin size={28} />}
+              icon={<MapPin size={26} />}
               iconBg="bg-green-50"
               iconColor="text-green-600"
               title="Rutas Locales"
@@ -98,7 +103,7 @@ export default function LandingPage() {
               benefit="→ Ideal para tu trayecto diario"
             />
             <FeatureCard
-              icon={<Users size={28} />}
+              icon={<Users size={26} />}
               iconBg="bg-orange-50"
               iconColor="text-orange-500"
               title="Comunidad"
@@ -109,58 +114,50 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA FINAL */}
-      <section className="bg-gray-900 py-24 px-6">
+      {/* CTA FINAL — sin Framer Motion */}
+      <section className="bg-gray-900 py-16 md:py-24 px-5">
         <div className="container mx-auto max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="bg-white/10 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-white/20 inline-block mb-6">
-              Únete hoy
-            </span>
-            <h3 className="text-4xl md:text-6xl font-black text-white leading-[1.1] mb-6 italic">
-              ¿Listo para tu <span className="text-blue-400">primer viaje?</span>
-            </h3>
-            <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
-              Regístrate gratis, encuentra compañeros de ruta y empieza a moverte de forma más inteligente por la ciudad.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/registro"
-                className="flex items-center justify-center gap-2 bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all group"
-              >
-                Crear cuenta gratis <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/login"
-                className="flex items-center justify-center gap-2 bg-white/10 text-white border border-white/20 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all"
-              >
-                Ya tengo cuenta
-              </Link>
-            </div>
-
-            {/* Mini badges bajo los botones */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              {[
-                { icon: <Leaf size={14} />, label: 'Gratis para estudiantes' },
-                { icon: <Clock size={14} />, label: 'Registro en minutos' },
-                { icon: <Star size={14} />, label: 'Comunidad verificada' },
-              ].map(({ icon, label }) => (
-                <span key={label} className="flex items-center gap-1.5 text-xs text-gray-400 font-medium">
-                  <span className="text-gray-500">{icon}</span>
-                  {label}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+          <span className="bg-white/10 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border border-white/20 inline-block mb-5">
+            Únete hoy
+          </span>
+          <h3 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-[1.1] mb-5 italic">
+            ¿Listo para tu{' '}
+            <span className="text-blue-400">primer viaje?</span>
+          </h3>
+          <p className="text-base md:text-lg text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
+            Regístrate gratis, encuentra compañeros de ruta y empieza a moverte de forma más inteligente por la ciudad.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/registro"
+              className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-base hover:bg-blue-500 transition-all group"
+            >
+              Crear cuenta gratis <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/login"
+              className="flex items-center justify-center gap-2 bg-white/10 text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-base hover:bg-white/20 transition-all"
+            >
+              Ya tengo cuenta
+            </Link>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4 mt-7">
+            {[
+              { icon: <Leaf size={13} />, label: 'Gratis para estudiantes' },
+              { icon: <Clock size={13} />, label: 'Registro en minutos' },
+              { icon: <Star size={13} />, label: 'Comunidad verificada' },
+            ].map(({ icon, label }) => (
+              <span key={label} className="flex items-center gap-1.5 text-xs text-gray-400 font-medium">
+                <span className="text-gray-500">{icon}</span>
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 px-6 border-t border-gray-100 text-center text-gray-400 text-sm">
+      <footer className="py-8 px-5 border-t border-gray-100 text-center text-gray-400 text-sm">
         <p>© 2026 RutaXRuta Medellín. Todos los derechos reservados.</p>
       </footer>
     </div>
@@ -292,19 +289,16 @@ function TripCard() {
   );
 }
 
-/* ─── FEATURE CARD ───────────────────────────────────────────────────────────── */
+/* ─── FEATURE CARD ─────────────────────────────────────────────────────────── */
 function FeatureCard({ icon, iconBg, iconColor, title, desc, benefit }) {
   return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all"
-    >
-      <div className={`w-14 h-14 ${iconBg} rounded-2xl flex items-center justify-center mb-6 ${iconColor}`}>
+    <div className="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all">
+      <div className={`w-12 h-12 md:w-14 md:h-14 ${iconBg} rounded-2xl flex items-center justify-center mb-5 ${iconColor}`}>
         {icon}
       </div>
-      <h4 className="text-xl font-bold mb-3">{title}</h4>
-      <p className="text-gray-500 leading-relaxed mb-4">{desc}</p>
+      <h4 className="text-lg md:text-xl font-bold mb-3">{title}</h4>
+      <p className="text-gray-500 leading-relaxed mb-3 text-sm md:text-base">{desc}</p>
       <p className="text-sm font-semibold text-gray-400">{benefit}</p>
-    </motion.div>
+    </div>
   );
 }
